@@ -7,7 +7,7 @@
 	<artifactId>myapp</artifactId>
 	<name>Mithun</name>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
@@ -120,14 +120,12 @@
 			<scope>test</scope>
 		</dependency>        
 	</dependencies>
-<!--
     <scm>
     	<connection>scm:svn:http://127.0.0.1/dummy</connection>
     	<developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>
     	<tag>HEAD</tag>
     	<url>http://127.0.0.1/dummy</url>
     </scm>	
-	-->
     <build>
         <plugins>
             <plugin>
@@ -164,7 +162,6 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
-		<!--
 	    <plugin>
         	<groupId>org.codehaus.mojo</groupId>
         	<artifactId>buildnumber-maven-plugin</artifactId>
@@ -188,9 +185,8 @@
           	<revisionOnScmFailure>unknownbuild</revisionOnScmFailure>   
         	</configuration>
       	   </plugin>
-		-->
            </plugins>
-	    <!--finalName>${project.artifactId}-${project.version}.${buildNumber}</finalName-->
+	    <finalName>${project.artifactId}-${project.version}.${buildNumber}</finalName>
     </build>
 	<distributionManagement>
     <repository>
