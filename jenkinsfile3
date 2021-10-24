@@ -83,12 +83,12 @@ pipeline {
         }
         stage('Deploy Image') {
             steps{
-                /*script {
+                script {
                     docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
+                        //dockerImage.push()
                         //docker push "mrutyunjayk/pipeline:myimg"
                     }
-                }*/
+                }
                 sh 'docker push mrutyunjayk/myimg:latest'
             }
         }
