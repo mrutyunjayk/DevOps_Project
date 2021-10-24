@@ -1,0 +1,94 @@
+// Declarative //
+
+pipeline {
+    environment {
+        registry = "mrutyunjayk/pipeline"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+    agent any
+
+    stages {
+        stage('Github_Pull') {
+            steps {
+                echo 'Downloading..'
+                git credentialsId: 'mrutyunjay', url: 'https://github.com/mrutyunjayk/DevOps_Project.git'
+            }
+        }
+ /*       stage('Build') {
+            steps {
+                echo 'Building..'
+                sh "mvn clean install"
+            }
+        }
+        stage('SonarQube analysis') {
+            //def scannerHome = tool 'SonarScanner 4.0';
+            steps{
+                withSonarQubeEnv('sonarqube-8.9.2') { 
+                    //If you have configured more than one global server connection, you can specify its name
+                    //sh "${scannerHome}/bin/sonar-scanner"
+                    sh "mvn sonar:sonar"
+                }
+            }
+        }
+        stage ('Server'){
+            steps {
+               rtServer (
+                 id: "artifactory-server",
+                 url: 'http://localhost:8082/artifactory',
+                 username: 'admin',
+                  password: 'Muttu@171193',
+                  bypassProxy: true,
+                   timeout: 300
+                        )
+            }
+        }
+        stage('Upload'){
+            steps{
+                rtUpload (
+                 serverId:"artifactory-server" ,
+                  spec: '''{
+                   "files": [
+                      {
+                      "pattern": "*.war",
+                      "target": "mack-libs-snapshot-local"
+                      }
+                            ]
+                           }''',
+                        )
+            }
+        }
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "artifactory-server"
+                )
+            }
+        }*/
+//        stage('Deploy') {
+//            steps {
+//                echo 'Deploying....'
+//                deploy adapters: [tomcat9(credentialsId: 'ee4515a9-104a-4c45-b282-c4042c5daa11', path: '', url: 'http://localhost:9090')], contextPath: null, war: '**/*.war'
+//            }
+//        }
+        stage('Building image') {
+            steps{
+                script {
+                    //dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = sudo docker.build("myimg") + ":$BUILD_NUMBER"
+                    //docker build -t myimg
+                }
+            }
+        }
+        stage('Deploy Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                        //docker push "mrutyunjayk/pipeline:myimg"
+                    }
+                }
+            }
+        }
+    }
+}
