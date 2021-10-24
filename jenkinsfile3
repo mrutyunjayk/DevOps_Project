@@ -78,7 +78,7 @@ pipeline {
                     dockerImage = sudo docker.build("myimg") + ":$BUILD_NUMBER"
                     //docker build -t myimg
                 }*/
-                sh 'docker build -t mrutyunjayk/myimg:latest .'
+                sh 'docker build -t mrutyunjayk/pipeline:latest .'
             }
         }
         stage('Deploy Image') {
@@ -89,7 +89,7 @@ pipeline {
                         //docker push "mrutyunjayk/pipeline:myimg"
                     }
                 }
-                sh 'docker push mrutyunjayk/myimg:latest'
+                sh 'docker push mrutyunjayk/pipeline:latest'
             }
         }
     }
