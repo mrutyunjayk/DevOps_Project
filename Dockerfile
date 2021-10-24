@@ -16,4 +16,4 @@ RUN apt-get install -y vim git wget
 WORKDIR /home
 RUN mkdir -p /home/prac_dir
 #RUN wget "https://github.com/mrutyunjayk/DevOps_Project.git"
-CMD [“echo”,”Image created”]
+#CMD [“echo”,”Image created”]
