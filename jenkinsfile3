@@ -81,15 +81,20 @@ pipeline {
                 sh 'docker build -t mrutyunjayk/pipeline:latest .'
             }
         }
+        stage('Docker Login'){
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
         stage('Deploy Image') {
             steps{
-                sh 'docker logout'
-                script {
+                //sh 'docker logout'
+                /*script {
                     docker.withRegistry( '', registryCredential ) {
                         //dockerImage.push()
                         //docker push "mrutyunjayk/pipeline:myimg"
                     }
-                }
+                }*/
                 sh 'docker push mrutyunjayk/pipeline:latest'
             }
         }
