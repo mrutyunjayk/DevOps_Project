@@ -73,21 +73,23 @@ pipeline {
 //        }
         stage('Building image') {
             steps{
-                script {
+                /*script {
                     //dockerImage = docker.build registry + ":$BUILD_NUMBER"
                     dockerImage = sudo docker.build("myimg") + ":$BUILD_NUMBER"
                     //docker build -t myimg
-                }
+                }*/
+                sh 'docker build -t mrutyunjayk/myimg:latest .'
             }
         }
         stage('Deploy Image') {
             steps{
-                script {
+                /*script {
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                         //docker push "mrutyunjayk/pipeline:myimg"
                     }
-                }
+                }*/
+                sh 'docker push mrutyunjayk/myimg:latest'
             }
         }
     }
