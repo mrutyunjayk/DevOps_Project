@@ -1,12 +1,14 @@
 // Declarative //
 
 pipeline {
+    agent any
+    
     environment {
         registry = "mrutyunjayk/pipeline"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     }
-    agent any
 
     stages {
         stage('Github_Pull') {
